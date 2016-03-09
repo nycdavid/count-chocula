@@ -1,0 +1,7 @@
+info:
+	@echo USAGE:
+	@echo SUM=200.0 PRESET=dashbox FILE=/path/to/csv/file make check-sum
+test:
+	bundle exec rspec spec/
+check-sum:
+	ruby ./sum_checker_cli.rb $(FILE) $(PRESET) $(SUM)
