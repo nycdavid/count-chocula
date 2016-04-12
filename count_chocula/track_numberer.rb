@@ -9,13 +9,14 @@ module CountChocula
     CSV_OPTS = {
       col_sep: ",", 
       row_sep: :auto, 
-      headers: :first_row
+      headers: :first_row,
+      encoding: "iso-8859-1:utf-8"
     }
 
     def initialize(path, category_column, counter_column)
       @pathname = path
       @categories = {}
-      @table = CSV.read(@pathname.to_path, CSV_OPTS, encoding: "utf-8")
+      @table = CSV.read(@pathname.to_path, CSV_OPTS)
       @category_column = category_column
       @counter_column = counter_column
       check_columns
