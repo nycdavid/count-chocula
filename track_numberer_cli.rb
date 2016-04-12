@@ -7,8 +7,8 @@ HEADERS_MAP = {
   "dashbox" => ["CDNum", "Tracknum"]
 }
 
-pathname = Pathname.new(ARGV[0])
-preset_name = ARGV[1]
+pathname = Pathname.new(ENV["FILE"])
+preset_name = ENV["PRESET"]
 
 puts "Path: #{pathname.to_path}"
 puts "Preset: #{preset_name}"

@@ -14,4 +14,4 @@ test:
 check-sum:
 	ruby ./sum_checker_cli.rb $(FILE) $(PRESET) $(SUM)
 number-track:
-	ruby ./track_numberer_cli.rb $(FILE)
+	ruby ./track_numberer_cli.rb $(FILE) $(PRESET)
