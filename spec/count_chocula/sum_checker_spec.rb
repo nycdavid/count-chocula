@@ -33,6 +33,17 @@ RSpec.describe CountChocula::SumChecker do
 
       expect(checker.table[0][62]).to eq "ERR: Fields do not sum to the supplied figure."
     end
+
+    it "should cast a string sum" do
+      allow(CSV).to receive(:read).
+        and_return CSV.parse(correct_csv_string, CountChocula::SumChecker::CSV_OPTS)
+      pn = Pathname.new("/path/to/correct/csv/string")
+      checker = CountChocula::SumChecker.new(pn, number_headers, "200.0")
+      row_before_check = checker.table[0]
+      checker.check
+
+      expect(checker.table[0][62]).to eq nil
+    end
   end
 
   describe "#write" do

@@ -14,7 +14,7 @@ module CountChocula
       @pathname = pathname
       @table = CSV.read pathname.to_path, CSV_OPTS
       @number_columns = number_columns
-      @end_sum = end_sum
+      @end_sum = end_sum.to_f
     end
 
     def check
