@@ -15,7 +15,7 @@ module CountChocula
     def initialize(path, category_column, counter_column)
       @pathname = path
       @categories = {}
-      @table = CSV.read(@pathname.to_path, CSV_OPTS)
+      @table = CSV.read(@pathname.to_path, CSV_OPTS, encoding: "utf-8")
       @category_column = category_column
       @counter_column = counter_column
       check_columns
