@@ -7,7 +7,7 @@ info:
 	@echo Track Numberer
 	@echo ---------------------
 	@echo USAGE:
-	@echo dashbox FILE=/path/to/csv/file make check-sum
+	@echo PRESET=dashbox FILE=/path/to/csv/file make check-sum
 	@echo
 test:
 	bundle exec rspec spec/
