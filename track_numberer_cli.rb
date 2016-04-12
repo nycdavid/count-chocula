@@ -14,7 +14,7 @@ puts "Path: #{pathname.to_path}"
 puts "Preset: #{preset_name}"
 
 numberer = CountChocula::TrackNumberer.new(
-  path, 
+  pathname, 
   HEADERS_MAP[preset_name][0], 
   HEADERS_MAP[preset_name][1]
 )
