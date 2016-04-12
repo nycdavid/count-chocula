@@ -1,7 +1,4 @@
-require "bundler"
-require "csv"
-require "yaml"
-Bundler.require(:test)
+require_relative "../spec_helper"
 require_relative "../../count_chocula/sum_checker"
 
 RSpec.describe CountChocula::SumChecker do

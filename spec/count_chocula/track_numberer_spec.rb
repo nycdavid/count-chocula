@@ -1,5 +1,4 @@
-require "bundler"
-Bundler.require(:test)
+require_relative "../spec_helper"
 require_relative "../../count_chocula/track_numberer"
 
 RSpec.describe CountChocula::TrackNumberer do
@@ -11,29 +10,35 @@ RSpec.describe CountChocula::TrackNumberer do
       "Sad Song,Songs Vol.2"
     ].join("\n")
   end
+  let(:correct_data) { File.read("spec/examples/correct-splits-row.csv") }
+  let(:correct_csv_string) { [headers, correct_data].join("\n") }
+  let(:headers) { YAML.load_file("spec/headers/dashbox_headers.yml").join(",") }
 
-  it "should provide the proper track numbering" do
-    the_count = CountChocula::TrackNumberer.new(csv_string, "Album", "Track #")
-    the_count.choculate
-
-    expect(the_count.table.to_csv).to eq "Title,Album,Track #\nHappy Song,Songs Vol.1,1\nHappy Song 2,Songs Vol.1,2\nSad Song,Songs Vol.2,1\n"
+  before :each do
+    allow(CSV).to receive(:read).
+      and_return CSV.parse(correct_csv_string, CountChocula::TrackNumberer::CSV_OPTS)
+    allow(CSV).to receive(:open).
+      and_return true
   end
 
-  context "when the tracks are out of order" do
-    let(:csv_string) do 
-      [
-        "Title,Album,Track #",
-        "Happy Song 2,Songs Vol.1", 
-        "Sad Song,Songs Vol.2",
-        "Happy Song,Songs Vol.1",
-      ].join("\n")
-    end
+  it "should provide the proper track numbering" do
+    post_choculated_data = [headers, File.read("spec/examples/proper_track_numbering.csv")].join("\n")
+    pn = Pathname.new "/path/to/correct/some-name.csv"
+    numberer = CountChocula::TrackNumberer.new(pn, "CDNum", "Tracknum")
+    numberer.choculate
 
-    it "should provide the proper track numbering" do
-      the_count = CountChocula::TrackNumberer.new(csv_string, "Album", "Track #") 
-      the_count.choculate
+    expect(numberer.table.to_csv).to eq post_choculated_data
+  end
 
-      expect(the_count.table.to_csv).to eq "Title,Album,Track #\nHappy Song 2,Songs Vol.1,1\nSad Song,Songs Vol.2,1\nHappy Song,Songs Vol.1,2\n"
+  describe "#write" do
+    it "should write to the same path that was passed to it" do
+      pn = Pathname.new "/path/to/correct/some-name.csv"
+      numberer = CountChocula::TrackNumberer.new(pn, "CDNum", "Tracknum")
+      numberer.choculate
+      numberer.write
+
+      expect(CSV).to have_received(:open).
+        with "/path/to/correct/track-numbered_some-name.csv", "wb"
     end
   end
 end
