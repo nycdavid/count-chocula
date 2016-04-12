@@ -21,3 +21,4 @@ numberer = CountChocula::TrackNumberer.new(
 puts "Checking categories..."
 numberer.choculate
 puts "Writing finished file..."
+numberer.write
