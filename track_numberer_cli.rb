@@ -4,7 +4,7 @@ require "pathname"
 require_relative "./count_chocula/track_numberer"
 
 HEADERS_MAP = {
-  "dashbox" => ["CDNum", "Tracknum"]
+  "dashbox" => ["CDNUM", "Tracknum"]
 }
 
 pathname = Pathname.new(ENV["FILE"])
